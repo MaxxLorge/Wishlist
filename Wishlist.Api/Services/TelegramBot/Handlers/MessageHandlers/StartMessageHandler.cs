@@ -53,8 +53,8 @@ public class StartMessageHandler : ITelegramMessageHandler
                 replyMarkup: new InlineKeyboardMarkup(
                     new[]
                     {
-                        InlineKeyboardButton.WithCallbackData("Да", "callback:registerYes"),
-                        InlineKeyboardButton.WithCallbackData("Нет", "callback:registerNo"),
+                        InlineKeyboardButton.WithCallbackData("Да", CallbackQueries.RegisterYes),
+                        InlineKeyboardButton.WithCallbackData("Нет", CallbackQueries.RegisterNo),
                     }),
                 cancellationToken: ct);
         else

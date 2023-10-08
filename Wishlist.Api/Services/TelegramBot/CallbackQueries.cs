@@ -7,4 +7,5 @@ public static class CallbackQueries
     public const string RegisterYes = "registerYes";
     public const string RegisterPhone = "registerPhone";
     public const string AddDesire = "addDesire";
+    public const string ShowMyDesires = "showMyDesires";
 }
