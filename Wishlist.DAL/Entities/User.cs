@@ -6,12 +6,14 @@ public class User
 {
     public int Id { get; init; }
 
-    public required string? Username { get; set; } 
+    public string? Username { get; set; } 
 
-    public required string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public long? TelegramUserId { get; set; }
 
     [Phone]
     public string? Phone { get; set; }
+
+    public ICollection<WishItem> WishItems { get; set; } = new List<WishItem>();
 }

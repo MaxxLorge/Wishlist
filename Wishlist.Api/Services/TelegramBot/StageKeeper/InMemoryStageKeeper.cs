@@ -1,21 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace Wishlist.Api.Services;
-
-[Flags]
-public enum Stage
-{
-    Default = 0,
-    FindingFriend = 1,
-    ShareContact = 2,
-}
-
-public interface IStageKeeper
-{
-    void SetStage(long telegramUserId, Stage stage);
-
-    Stage GetOrAddStage(long telegramUserId, Stage defaultStage);
-}
+namespace Wishlist.Api.Services.TelegramBot.StageKeeper;
 
 public class InMemoryStageKeeper : IStageKeeper
 {

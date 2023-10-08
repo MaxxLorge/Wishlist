@@ -2,6 +2,8 @@ using Kontur.Results;
 
 using Telegram.Bot.Types;
 
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
+
 namespace Wishlist.Api.Services.TelegramBot.Handlers.MessageHandlers;
 
 public interface ITelegramMessageHandler

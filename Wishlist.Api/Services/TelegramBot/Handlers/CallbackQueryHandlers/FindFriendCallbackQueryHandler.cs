@@ -1,6 +1,8 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
+
 namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 
 public class FindFriendCallbackQueryHandler : ITelegramCallbackQueryHandler
@@ -15,7 +17,7 @@ public class FindFriendCallbackQueryHandler : ITelegramCallbackQueryHandler
         _telegramBotClient = telegramBotClient;
     }
     
-    public string CallbackData => "callback:findFriend";
+    public string CallbackData => CallbackQueries.FindFriend;
     
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {

@@ -14,10 +14,11 @@ public class MenuItem
 
     public static class Sets
     {
-        public static IReadOnlyCollection<MenuItem> Main = new[]
+        public static readonly IReadOnlyCollection<MenuItem> Main = new[]
         {
-            new MenuItem("Поделиться своим номером", "callback:registerPhone"),
-            new MenuItem("Найти друга", "callback:findFriend")
+            new MenuItem("Поделиться своим номером", CallbackQueries.RegisterPhone),
+            new MenuItem("Найти друга", CallbackQueries.FindFriend),
+            new MenuItem("Добавить желание", CallbackQueries.AddDesire)
         };
     }
 }

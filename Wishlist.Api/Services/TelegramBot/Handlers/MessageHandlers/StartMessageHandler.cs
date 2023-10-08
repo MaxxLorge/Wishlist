@@ -7,6 +7,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 using Wishlist.Api.Services.TelegramBot.Factories;
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
 using Wishlist.Api.Services.Users;
 using Wishlist.Api.Settings;
 

@@ -4,6 +4,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 using Wishlist.Api.Services.TelegramBot.Factories;
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
 
 namespace Wishlist.Api.Services.TelegramBot.Handlers.MessageHandlers;
 

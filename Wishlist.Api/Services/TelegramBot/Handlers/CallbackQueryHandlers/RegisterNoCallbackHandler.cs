@@ -2,6 +2,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 
 using Wishlist.Api.Services.TelegramBot.Factories;
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
 
 namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 
@@ -17,7 +18,7 @@ public class RegisterNoCallbackHandler : ITelegramCallbackQueryHandler
         _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
 
-    public string CallbackData => "callback:registerNo";
+    public string CallbackData => CallbackQueries.RegisterNo;
 
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {

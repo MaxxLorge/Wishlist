@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
+using Wishlist.DAL.Configurations;
 using Wishlist.DAL.Entities;
 
 namespace Wishlist.DAL;
@@ -12,5 +12,15 @@ public class WishlistDbContext : DbContext
         
     }
 
-    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<WishItem> WishItems { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .ApplyConfiguration(new UserConfiguration())
+            .ApplyConfiguration(new WishItemConfiguration());
+        
+    }
 }

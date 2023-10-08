@@ -5,6 +5,7 @@ using Telegram.Bot.Types.Enums;
 
 using Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 using Wishlist.Api.Services.TelegramBot.Handlers.MessageHandlers;
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
 
 namespace Wishlist.Api.Services;
 

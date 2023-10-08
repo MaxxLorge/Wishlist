@@ -2,6 +2,8 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
+
 namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 
 public class RegisterYesCallbackHandler : ITelegramCallbackQueryHandler
@@ -13,7 +15,7 @@ public class RegisterYesCallbackHandler : ITelegramCallbackQueryHandler
         _telegramBotClient = telegramBotClient;
     }
     
-    public string CallbackData => "callback:registerYes";
+    public string CallbackData => CallbackQueries.RegisterYes;
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         await _telegramBotClient

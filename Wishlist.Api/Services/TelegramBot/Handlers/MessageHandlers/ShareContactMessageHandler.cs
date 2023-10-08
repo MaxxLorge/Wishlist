@@ -5,6 +5,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 using Wishlist.Api.Services.TelegramBot.Factories;
+using Wishlist.Api.Services.TelegramBot.StageKeeper;
 using Wishlist.DAL.Repositories;
 
 using User = Wishlist.DAL.Entities.User;
