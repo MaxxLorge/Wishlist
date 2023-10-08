@@ -20,8 +20,9 @@ public class ShowMyDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
         _context = context;
         _telegramBotClient = telegramBotClient;
     }
-    
-    public string CallbackData => CallbackQueries.ShowMyDesires;
+
+    public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.ShowMyDesires;
+
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         var telegramUserId = callbackQuery.From.Id;
@@ -45,6 +46,6 @@ public class ShowMyDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
     private IReplyMarkup CreateReplyMarkup(ICollection<WishItem> wishItems) =>
         new InlineKeyboardMarkup(new[]
         {
-            wishItems.Select(x => InlineKeyboardButton.WithCallbackData($"{x.Name}"))
+            wishItems.Select(x => InlineKeyboardButton.WithCallbackData(x.Name, CallbackQueries.ShowDesireDetails(x)))
         });
 }

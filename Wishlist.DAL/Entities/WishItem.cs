@@ -34,4 +34,14 @@ public class WishItem
     public int UserId { get; set; }
 
     public User User { get; set; } = null!;
+
+    public override string ToString()
+    {
+        return
+            $"Наименование: {Name}{Environment.NewLine}" +
+            $"Степень желанности: {(int)DesirabilityDegree}{Environment.NewLine}" +
+            $"Ссылка: {Link}{Environment.NewLine}" +
+            $"Описание: {Description}{Environment.NewLine}" +
+            $"Стоимость: {Cost}";
+    }
 }

@@ -16,9 +16,9 @@ public class FindFriendCallbackQueryHandler : ITelegramCallbackQueryHandler
         _stageKeeper = stageKeeper;
         _telegramBotClient = telegramBotClient;
     }
-    
-    public string CallbackData => CallbackQueries.FindFriend;
-    
+
+    public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.FindFriend;
+
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         var user = callbackQuery.From;

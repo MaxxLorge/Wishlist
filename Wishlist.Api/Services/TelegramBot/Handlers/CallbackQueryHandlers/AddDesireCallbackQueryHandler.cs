@@ -14,9 +14,9 @@ public class AddDesireCallbackQueryHandler : ITelegramCallbackQueryHandler
     {
         _telegramBotClient = telegramBotClient;
     }
-    
-    public string CallbackData => CallbackQueries.AddDesire;
-    
+
+    public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.AddDesire;
+
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         await _telegramBotClient.SendTextMessageAsync(

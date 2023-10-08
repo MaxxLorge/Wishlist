@@ -14,8 +14,9 @@ public class RegisterYesCallbackHandler : ITelegramCallbackQueryHandler
     {
         _telegramBotClient = telegramBotClient;
     }
-    
-    public string CallbackData => CallbackQueries.RegisterYes;
+
+    public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.RegisterYes;
+
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         await _telegramBotClient

@@ -91,7 +91,7 @@ public class UpdateHandlers
             ?? throw new InvalidOperationException("Отсутствует CallbackQuery");
 
         var handler = _callbackQueryHandlers
-            .SingleOrDefault(x => x.CallbackData == callback.Data);
+            .SingleOrDefault(x => x.CallbackDataPredicate(callback.Data!));
         
         if(handler == null)
             return;

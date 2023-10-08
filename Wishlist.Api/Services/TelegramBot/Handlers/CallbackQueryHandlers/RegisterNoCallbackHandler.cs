@@ -18,7 +18,7 @@ public class RegisterNoCallbackHandler : ITelegramCallbackQueryHandler
         _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
 
-    public string CallbackData => CallbackQueries.RegisterNo;
+    public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.RegisterNo;
 
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {

@@ -6,7 +6,7 @@ namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 
 public interface ITelegramCallbackQueryHandler
 {
-    string CallbackData { get; }
+    Func<string, bool> CallbackDataPredicate { get; }
     
     Task Handle(CallbackQuery callbackQuery, CancellationToken ct);
     
