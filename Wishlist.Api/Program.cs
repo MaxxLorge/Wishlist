@@ -78,13 +78,3 @@ void MigrateDatabase()
     var context = scope.ServiceProvider.GetRequiredService<WishlistDbContext>();
     context.Database.Migrate();
 }
-
-// void RegisterMessageHandlers(IServiceCollection serviceCollection)
-// {
-//     serviceCollection.AddScoped<ITelegramMessageHandler, StartMessageHandler>();
-// }
-//
-// void RegisterCallbackQueryHandlers(IServiceCollection serviceCollection)
-// {
-//     serviceCollection.AddScoped<ITelegramCallbackQueryHandler, RegisterNoCallbackHandler>();
-// }
