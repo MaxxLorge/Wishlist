@@ -48,17 +48,13 @@ builder.Services.AddScoped<UpdateHandlers>();
 // RegisterCallbackQueryHandlers(builder.Services);
 
 
-builder
-    .Services
-    .AddDbContextPool<WishlistDbContext>(optionsBuilder =>
-        optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+RegisterDatabase();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    MigrateDatabase();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -71,10 +67,17 @@ app.Run();
 return;
 
 
-
-void MigrateDatabase()
+void RegisterDatabase()
 {
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<WishlistDbContext>();
-    context.Database.Migrate();
+    var useInMemoryDb = builder!.Configuration.GetValue<bool>("UseInMemoryDatabase");
+    if (useInMemoryDb)
+        builder
+            .Services
+            .AddDbContextPool<WishlistDbContext>(optionsBuilder =>
+                optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+    else
+        builder!
+            .Services
+            .AddDbContextPool<WishlistDbContext>(optionsBuilder =>
+                optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 }
