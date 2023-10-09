@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Wishlist.DAL;
@@ -11,9 +12,11 @@ using Wishlist.DAL;
 namespace Wishlist.DAL.Migrations
 {
     [DbContext(typeof(WishlistDbContext))]
-    partial class WishlistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231008213415_Add_Subscribes")]
+    partial class Add_Subscribes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,9 +62,6 @@ namespace Wishlist.DAL.Migrations
 
                     b.Property<string>("Phone")
                         .HasColumnType("text");
-
-                    b.Property<long?>("TelegramChatId")
-                        .HasColumnType("bigint");
 
                     b.Property<long?>("TelegramUserId")
                         .HasColumnType("bigint");

@@ -11,13 +11,10 @@ namespace Wishlist.Api.Services.TelegramBot.Handlers.MessageHandlers;
 public class ShowMenuMessageHandler : ITelegramMessageHandler
 {
     private readonly ITelegramBotClient _telegramBotClient;
-    private readonly IInlineKeyboardMarkupFactory _inlineKeyboardMarkupFactory;
 
-    public ShowMenuMessageHandler(ITelegramBotClient telegramBotClient,
-        IInlineKeyboardMarkupFactory inlineKeyboardMarkupFactory)
+    public ShowMenuMessageHandler(ITelegramBotClient telegramBotClient)
     {
         _telegramBotClient = telegramBotClient;
-        _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
     
     public Func<Message, bool> MessagePredicate => message => message.Text == "/menu";
@@ -27,7 +24,7 @@ public class ShowMenuMessageHandler : ITelegramMessageHandler
         await _telegramBotClient.SendTextMessageAsync(
             message.Chat.Id,
             "Главное меню",
-            replyMarkup: _inlineKeyboardMarkupFactory.CreateMenu(),
+            replyMarkup: InlineKeyboardMarkupFactory.CreateMainMenu(),
             cancellationToken: ct);
         return Result.Succeed();
     }

@@ -1,3 +1,5 @@
+using Wishlist.DAL.Entities;
+
 namespace Wishlist.Api.Services.TelegramBot.Models;
 
 public class MenuItem
@@ -21,5 +23,14 @@ public class MenuItem
             new MenuItem("Добавить желание", CallbackQueries.AddDesire),
             new MenuItem("Показать мой список желаний", CallbackQueries.ShowMyDesires),
         };
+
+        public static IReadOnlyCollection<MenuItem> UserContextMenu(User user)
+        {
+            return new[]
+            {
+                new MenuItem("Список желаний", CallbackQueries.ShowUserDesires(user)),
+                new MenuItem("Подписаться", CallbackQueries.SubscribeToUser(user))
+            };
+        }
     }
 }

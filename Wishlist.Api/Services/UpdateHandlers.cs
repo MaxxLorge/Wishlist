@@ -1,4 +1,8 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+
+using Newtonsoft.Json;
 
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -14,19 +18,23 @@ public class UpdateHandlers
     private readonly IEnumerable<ITelegramMessageHandler> _telegramMessageHandlers;
     private readonly IEnumerable<ITelegramCallbackQueryHandler> _callbackQueryHandlers;
     private readonly IStageKeeper _stageKeeper;
+    private readonly ILogger<UpdateHandlers> _logger;
 
     public UpdateHandlers(
         IEnumerable<ITelegramMessageHandler> telegramMessageHandlers,
         IEnumerable<ITelegramCallbackQueryHandler> callbackQueryHandlers,
-        IStageKeeper stageKeeper)
+        IStageKeeper stageKeeper,
+        ILogger<UpdateHandlers> logger)
     {
         _telegramMessageHandlers = telegramMessageHandlers;
         _callbackQueryHandlers = callbackQueryHandlers;
         _stageKeeper = stageKeeper;
+        _logger = logger;
     }
     
     public async Task HandleUpdate(Update update, CancellationToken ct)
     {
+        _logger.LogInformation("{Update}", JsonConvert.SerializeObject(update));
         switch (update.Type)
         {
             case UpdateType.Message:

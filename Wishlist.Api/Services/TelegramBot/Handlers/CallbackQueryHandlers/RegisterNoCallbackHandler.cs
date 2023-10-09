@@ -9,13 +9,10 @@ namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 public class RegisterNoCallbackHandler : ITelegramCallbackQueryHandler
 {
     private readonly ITelegramBotClient _telegramBotClient;
-    private readonly IInlineKeyboardMarkupFactory _inlineKeyboardMarkupFactory;
 
-    public RegisterNoCallbackHandler(ITelegramBotClient telegramBotClient,
-        IInlineKeyboardMarkupFactory inlineKeyboardMarkupFactory)
+    public RegisterNoCallbackHandler(ITelegramBotClient telegramBotClient)
     {
         _telegramBotClient = telegramBotClient;
-        _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
 
     public Func<string, bool> CallbackDataPredicate => s => s == CallbackQueries.RegisterNo;
@@ -25,7 +22,7 @@ public class RegisterNoCallbackHandler : ITelegramCallbackQueryHandler
         await _telegramBotClient.SendTextMessageAsync(
             callbackQuery.Message!.Chat.Id,
             "Хорошо. Вы можете поделиться своим номером в любой момент через главное меню.",
-            replyMarkup: _inlineKeyboardMarkupFactory.CreateMenu(),
+            replyMarkup: InlineKeyboardMarkupFactory.CreateMainMenu(),
             cancellationToken: ct);
     }
 

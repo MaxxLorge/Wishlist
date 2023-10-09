@@ -1,19 +1,20 @@
 using Telegram.Bot.Types.ReplyMarkups;
 
 using Wishlist.Api.Services.TelegramBot.Models;
+using Wishlist.DAL.Entities;
 
 namespace Wishlist.Api.Services.TelegramBot.Factories;
 
-public interface IInlineKeyboardMarkupFactory
+public static class InlineKeyboardMarkupFactory 
 {
-    InlineKeyboardMarkup CreateMenu();
-}
+    public static InlineKeyboardMarkup CreateMainMenu() =>
+        CreateMenu(MenuItem.Sets.Main);
 
-public class InlineKeyboardMarkupFactory : IInlineKeyboardMarkupFactory
-{
-    public InlineKeyboardMarkup CreateMenu() =>
-        new(
-            MenuItem.Sets.Main
-                .Select(item => 
-                    new []{ InlineKeyboardButton.WithCallbackData(item.Name, item.CallbackQuery) }));
+    public static InlineKeyboardMarkup CreateUserContextMenu(User user) =>
+        CreateMenu(MenuItem.Sets.UserContextMenu(user));
+
+    private static InlineKeyboardMarkup CreateMenu(IReadOnlyCollection<MenuItem> menuItems) =>
+        new(menuItems
+            .Select(item => 
+                new [] {InlineKeyboardButton.WithCallbackData(item.Name, item.CallbackQuery)}));
 }

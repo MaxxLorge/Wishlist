@@ -13,7 +13,19 @@ public static class CallbackQueries
     public const string AddDesire = "addDesire";
     public const string ShowMyDesires = "showMyDesires";
 
-    public const string ShowDesireDetailsPrefix = "showDesireDetails";
+    public static string ShowDesireDetails(WishItem wishItem) => $"{Prefixes.ShowDesireDetailsPrefix}{Separator}{wishItem.Id}";
 
-    public static string ShowDesireDetails(WishItem wishItem) => $"{ShowDesireDetailsPrefix}{Separator}{wishItem.Id}";
+    public static string ShowUserContextMenu(User user) => $"{Prefixes.ShowUserContextMenuPrefix}{Separator}{user.Id}";
+    
+    public static string ShowUserDesires(User user) => $"{Prefixes.ShowUserDesiresPrefix}{Separator}{user.Id}";
+
+    public static string SubscribeToUser(User user) => $"{Prefixes.SubscribeToUserPrefix}{Separator}{user.Id}";
+
+    public static class Prefixes
+    {
+        public const string ShowDesireDetailsPrefix = "showDesireDetails";
+        public const string ShowUserContextMenuPrefix = "showUserContextMenu";
+        public const string ShowUserDesiresPrefix = "showUserDesires";
+        public const string SubscribeToUserPrefix = "subscribeToUser";
+    }
 }

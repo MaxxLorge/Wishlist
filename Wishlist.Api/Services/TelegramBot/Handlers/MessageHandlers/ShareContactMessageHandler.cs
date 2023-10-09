@@ -16,15 +16,12 @@ public class ShareContactMessageHandler : ITelegramMessageHandler
 {
     private readonly IUserRepository _userRepository;
     private readonly ITelegramBotClient _telegramBotClient;
-    private readonly IInlineKeyboardMarkupFactory _inlineKeyboardMarkupFactory;
 
     public ShareContactMessageHandler(IUserRepository userRepository,
-        ITelegramBotClient telegramBotClient,
-        IInlineKeyboardMarkupFactory inlineKeyboardMarkupFactory)
+        ITelegramBotClient telegramBotClient)
     {
         _userRepository = userRepository;
         _telegramBotClient = telegramBotClient;
-        _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
 
     public Func<Message, bool> MessagePredicate => message => message.Contact?.PhoneNumber != null;
@@ -56,7 +53,7 @@ public class ShareContactMessageHandler : ITelegramMessageHandler
             .SendTextMessageAsync(
                 message.Chat.Id,
                 "Главное меню",
-                replyMarkup: _inlineKeyboardMarkupFactory.CreateMenu(),
+                replyMarkup: InlineKeyboardMarkupFactory.CreateMainMenu(),
                 cancellationToken: ct);
         
         return Result.Succeed();

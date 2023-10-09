@@ -16,11 +16,12 @@ public class WishlistDbContext : DbContext
 
     public DbSet<WishItem> WishItems { get; set; }
 
+    public DbSet<Subscribe> Subscribes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
             .ApplyConfiguration(new UserConfiguration())
             .ApplyConfiguration(new WishItemConfiguration());
-        
     }
 }

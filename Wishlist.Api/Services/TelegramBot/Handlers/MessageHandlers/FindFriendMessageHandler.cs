@@ -54,5 +54,5 @@ public class FindFriendMessageHandler : ITelegramMessageHandler
         new(
             users.Select(x =>
                 InlineKeyboardButton
-                    .WithCallbackData($"{x.Username}({x.Name}), {x.Phone ?? string.Empty}")));
+                    .WithCallbackData(x.Username!, CallbackQueries.ShowUserContextMenu(x))));
 }

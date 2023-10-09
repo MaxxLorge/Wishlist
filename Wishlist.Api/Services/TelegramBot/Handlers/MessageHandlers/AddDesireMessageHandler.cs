@@ -9,6 +9,8 @@ using Wishlist.Api.Services.TelegramBot.StageKeeper;
 using Wishlist.DAL;
 using Wishlist.DAL.Entities;
 
+using User = Wishlist.DAL.Entities.User;
+
 namespace Wishlist.Api.Services.TelegramBot.Handlers.MessageHandlers;
 
 public class AddDesireMessageHandler : ITelegramMessageHandler
@@ -60,6 +62,7 @@ public class AddDesireMessageHandler : ITelegramMessageHandler
 
         var user = await _wishlistDbContext
             .Users
+            .Include(x => x.Subscribers)
             .SingleAsync(x => x.TelegramUserId == message.From!.Id, ct);
         user.WishItems.Add(wishItem);
 
@@ -70,9 +73,23 @@ public class AddDesireMessageHandler : ITelegramMessageHandler
             message.Chat.Id,
             "Желание успешно добавлено",
             cancellationToken: ct);
+
+        await NotifySubscribers(user, wishItem);
         
         return Result.Succeed();
     }
 
     public Stage StageAfterHandling => _isSuccessful ? Stage.Default : Stage.AddDesire;
+
+    private async Task NotifySubscribers(User currentUser, WishItem wishItem)
+    {
+        var subscribers = currentUser.Subscribers;
+        foreach (var subscriber in subscribers)
+        {
+            await _telegramBotClient.SendTextMessageAsync(
+                subscriber.TelegramChatId!,
+                $"{currentUser.Username} добавил(а) новое желание{Environment.NewLine}" +
+                $"{wishItem}");
+        }
+    }
 }

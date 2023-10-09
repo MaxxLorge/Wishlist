@@ -21,7 +21,7 @@ public class ShowDesireDetailsCallbackQueryHandler : ITelegramCallbackQueryHandl
         _telegramBotClient = telegramBotClient;
     }
     
-    public Func<string, bool> CallbackDataPredicate => s => s.StartsWith(CallbackQueries.ShowDesireDetailsPrefix);
+    public Func<string, bool> CallbackDataPredicate => s => s.StartsWith(CallbackQueries.Prefixes.ShowDesireDetailsPrefix);
 
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {

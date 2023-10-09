@@ -18,17 +18,14 @@ public class StartMessageHandler : ITelegramMessageHandler
     private readonly ITelegramBotClient _botClient;
     private readonly IOptions<MessageTextsConfiguration> _messageTextConfig;
     private readonly IUserService _userService;
-    private readonly IInlineKeyboardMarkupFactory _inlineKeyboardMarkupFactory;
 
     public StartMessageHandler(ITelegramBotClient botClient,
         IOptions<MessageTextsConfiguration> messageTextConfig,
-        IUserService userService,
-        IInlineKeyboardMarkupFactory inlineKeyboardMarkupFactory)
+        IUserService userService)
     {
         _botClient = botClient;
         _messageTextConfig = messageTextConfig;
         _userService = userService;
-        _inlineKeyboardMarkupFactory = inlineKeyboardMarkupFactory;
     }
 
     public Func<Message, bool> MessagePredicate => message => message.Text == "/start";
@@ -44,7 +41,7 @@ public class StartMessageHandler : ITelegramMessageHandler
         var telegramUser = message.From!;
         
         var user = await _userService.FindByTelegramUserId(telegramUser.Id, ct) 
-                   ?? await _userService.AddPrimaryUserInfo(telegramUser.Username, telegramUser.FirstName, telegramUser.Id, ct);
+                   ?? await _userService.AddPrimaryUserInfo(telegramUser.Username, telegramUser.FirstName, telegramUser.Id, message.Chat.Id, ct);
 
         if (user.Phone == null)
             await _botClient.SendTextMessageAsync(
@@ -61,7 +58,7 @@ public class StartMessageHandler : ITelegramMessageHandler
             await _botClient.SendTextMessageAsync(
                 message.Chat.Id,
                 "Главное меню",
-                replyMarkup: _inlineKeyboardMarkupFactory.CreateMenu(),
+                replyMarkup: InlineKeyboardMarkupFactory.CreateMainMenu(),
                 cancellationToken: ct);
 
         return Result.Succeed();

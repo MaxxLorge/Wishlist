@@ -7,10 +7,10 @@ public interface IUserService
 {
     Task<User?> FindByTelegramUserId(long telegramUserId, CancellationToken ct);
 
-    Task<User> AddPrimaryUserInfo(
-        string? username,
+    Task<User> AddPrimaryUserInfo(string? username,
         string firstName,
         long telegramUserId,
+        long chatId,
         CancellationToken ct);
 
     Task<bool> UpdatePhone(int userId, string phone, CancellationToken ct);
@@ -34,13 +34,15 @@ public class UserService : IUserService
         string? username,
         string firstName,
         long telegramUserId,
+        long chatId,
         CancellationToken ct)
     {
         var userToAdd = new User()
         {
             Username = username,
             Name = firstName,
-            TelegramUserId = telegramUserId
+            TelegramUserId = telegramUserId,
+            TelegramChatId = chatId
         };
 
         await _userRepository

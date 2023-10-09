@@ -20,15 +20,20 @@ public class WishItem
 {
     public int Id { get; set; }
 
+    [Display(Name = "Наименование")]
     public string Name { get; set; } = null!;
 
+    [Display(Name = "Степень желанности")]
     public DesirabilityDegree DesirabilityDegree { get; set; } = DesirabilityDegree.One;
 
     [Url]
+    [Display(Name = "Ссылка")]
     public string? Link { get; set; }
 
+    [Display(Name = "Описание")]
     public string? Description { get; set; }
     
+    [Display(Name = "Стоимость")]
     public decimal? Cost { get; set; }
 
     public int UserId { get; set; }
