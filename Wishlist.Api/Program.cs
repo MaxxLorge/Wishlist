@@ -1,6 +1,6 @@
-using LightInject;
-using LightInject.Microsoft.DependencyInjection;
+using System.Net;
 
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -18,6 +18,7 @@ var builder = WebApplication
 builder.Host.UseLightInject(sr => sr.RegisterFrom<CompositionRoot>());
 
 builder.Configuration.AddJsonFile("secret.json");
+builder.Configuration.AddEnvironmentVariables();
 
 var botConfigurationSection = builder.Configuration.GetSection(BotConfiguration.ConfigurationName);
 var messageTextsConfigurationSection = builder.Configuration.GetSection(MessageTextsConfiguration.ConfigurationName);
@@ -44,9 +45,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<ConfigureWebhook>();
 builder.Services.AddScoped<UpdateHandlers>();
 
-// RegisterMessageHandlers(builder.Services);
-// RegisterCallbackQueryHandlers(builder.Services);
-
 
 RegisterDatabase();
 
@@ -58,8 +56,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// app.UseHttpsRedirection();
 
 app.MapControllers();
 
