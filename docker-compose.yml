@@ -3,7 +3,7 @@ volumes:
   pgadmin:
 
 secrets:
-  secret.json:
+  wishlist_app_secrets:
     file: secret.json
 
 services:
@@ -12,6 +12,8 @@ services:
     restart: always
     volumes:
       - psql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
     environment:
       TZ: Asia/Yekaterinburg
       POSTGRES_PASSWORD: m35pn92x
@@ -19,11 +21,13 @@ services:
   wishlist_app:
     image: maxxlorge/wishlist:dev
     restart: always
+    ports:
+      - 10001:80
     environment:
       TZ: Asia/Yekaterinburg
       ASPNETCORE_URLS: http://localhost:5000
     depends_on:
       - psql
     secrets:
-      - source: secret.json
+      - source: wishlist_app_secrets
         target: /app/secret.json
