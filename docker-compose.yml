@@ -13,15 +13,15 @@ services:
     volumes:
       - psql:/var/lib/postgresql/data
     environment:
+      TZ: Asia/Yekaterinburg
       POSTGRES_PASSWORD: m35pn92x
 
   wishlist_app:
     image: maxxlorge/wishlist:dev
     restart: always
     environment:
-      - TZ=Asia/Yekaterinburg
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://localhost:5000
+      TZ: Asia/Yekaterinburg
+      ASPNETCORE_URLS: http://localhost:5000
     depends_on:
       - psql
     secrets:
