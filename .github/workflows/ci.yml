@@ -27,4 +27,16 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: maxxlorge/wishlist:ghactions
+          tags: maxxlorge/wishlist:latest
+  ssh:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: deploy
+        uses: nekiro/ssh-job@main
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          user: ${{ secrets.SSH_USER }}
+          command: |
+            docker compose up -d
