@@ -40,4 +40,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           user: ${{ secrets.SSH_USER }}
           command: |
-            docker compose up -d
+            docker container remove -f wishlist_app
+            docker image remove maxxlorge/wishlist:latest
+            docker compose up -d --remove-orphans
