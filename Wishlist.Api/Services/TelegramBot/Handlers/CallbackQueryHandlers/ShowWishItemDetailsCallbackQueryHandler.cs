@@ -4,21 +4,29 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
+using Wishlist.Api.Services.TelegramBot.Extensions;
 using Wishlist.Api.Services.TelegramBot.StageKeeper;
 using Wishlist.DAL;
 using Wishlist.DAL.Entities;
+using Wishlist.DAL.Repositories;
+
+using User = Wishlist.DAL.Entities.User;
 
 namespace Wishlist.Api.Services.TelegramBot.Handlers.CallbackQueryHandlers;
 
-public class ShowDesireDetailsCallbackQueryHandler : ITelegramCallbackQueryHandler
+public class ShowWishItemDetailsCallbackQueryHandler : ITelegramCallbackQueryHandler
 {
-    private readonly WishlistDbContext _context;
+    private readonly IWishItemRepository _wishItemRepository;
+    private readonly IUserRepository _userRepository;
     private readonly ITelegramBotClient _telegramBotClient;
 
-    public ShowDesireDetailsCallbackQueryHandler(WishlistDbContext context,
+    public ShowWishItemDetailsCallbackQueryHandler(
+        IWishItemRepository wishItemRepository,
+        IUserRepository userRepository,
         ITelegramBotClient telegramBotClient)
     {
-        _context = context;
+        _wishItemRepository = wishItemRepository;
+        _userRepository = userRepository;
         _telegramBotClient = telegramBotClient;
     }
     
@@ -26,16 +34,17 @@ public class ShowDesireDetailsCallbackQueryHandler : ITelegramCallbackQueryHandl
 
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
-        var wishItemId = int.Parse(callbackQuery.Data!.Split(CallbackQueries.Separator)[1]);
+        var wishItemId = callbackQuery.GetIdFromCallbackData();
 
-        var wishItem = await _context
-            .WishItems
-            .SingleAsync(x => x.Id == wishItemId, ct);
+        var wishItem = await _wishItemRepository
+            .FindById(wishItemId, ct);
+        var user = await _userRepository
+            .FindByTelegramUserId(callbackQuery.GetCallbackInitiatorTelegramUserId(), ct);
 
         await _telegramBotClient.SendTextMessageAsync(
             callbackQuery.Message!.Chat.Id,
-            CreateDetailsString(wishItem),
-            replyMarkup: CreateReplyMarkup(wishItem),
+            CreateDetailsString(wishItem!),
+            replyMarkup: CreateReplyMarkup(wishItem!, user!),
             cancellationToken: ct);
     }
 
@@ -43,8 +52,11 @@ public class ShowDesireDetailsCallbackQueryHandler : ITelegramCallbackQueryHandl
 
     private static string CreateDetailsString(WishItem wishItem) => wishItem.ToString();
 
-    private static IReplyMarkup CreateReplyMarkup(WishItem wishItem)
+    private static IReplyMarkup? CreateReplyMarkup(WishItem wishItem, User user)
     {
+        if (user.Id != wishItem.UserId)
+            return null;
+        
         return new InlineKeyboardMarkup(
             InlineKeyboardButton.WithCallbackData("Удалить", CallbackQueries.RemoveWishItem(wishItem)));
     }

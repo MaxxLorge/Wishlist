@@ -6,6 +6,7 @@ namespace Wishlist.DAL.Repositories;
 
 public interface IWishItemRepository
 {
+    Task<WishItem?> FindById(int id, CancellationToken ct);
     Task<WishItem> Add(WishItem wishItem, CancellationToken ct);
     Task DeleteById(int wishItemId, CancellationToken ct);
 }
@@ -17,6 +18,13 @@ public class WishItemRepository : IWishItemRepository
     public WishItemRepository(WishlistDbContext context)
     {
         _context = context;
+    }
+
+    public async Task<WishItem?> FindById(int id, CancellationToken ct)
+    {
+        return await _context
+            .WishItems
+            .SingleOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<WishItem> Add(WishItem wishItem, CancellationToken ct)
