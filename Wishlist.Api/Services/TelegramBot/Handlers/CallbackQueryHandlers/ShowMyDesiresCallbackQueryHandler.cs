@@ -44,8 +44,10 @@ public class ShowMyDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
     public Stage StageAfterHandling => Stage.Default;
 
     private IReplyMarkup CreateReplyMarkup(ICollection<WishItem> wishItems) =>
-        new InlineKeyboardMarkup(new[]
-        {
-            wishItems.Select(x => InlineKeyboardButton.WithCallbackData(x.Name, CallbackQueries.ShowDesireDetails(x)))
-        });
+        new InlineKeyboardMarkup(
+            wishItems.Select(x => new []
+            {
+                InlineKeyboardButton.WithCallbackData(x.Name, CallbackQueries.ShowDesireDetails(x))
+            })
+        );
 }
