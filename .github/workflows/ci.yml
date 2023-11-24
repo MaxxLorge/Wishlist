@@ -29,6 +29,7 @@ jobs:
           push: true
           tags: maxxlorge/wishlist:latest
   ssh:
+    needs: docker
     runs-on: ubuntu-latest
     steps:
       -
