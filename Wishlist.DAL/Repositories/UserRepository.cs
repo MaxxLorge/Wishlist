@@ -14,6 +14,8 @@ public interface IUserRepository
 
     Task Update(User user, CancellationToken ct);
 
+    Task<IReadOnlyCollection<User>> GetSubscribesByTelegramUserId(long telegramUserId, CancellationToken ct);
+
     Task<IReadOnlyCollection<User>> FindUsersByUsername(string loginSubstring, CancellationToken ct);
 }
 
@@ -46,6 +48,16 @@ public class UserRepository : IUserRepository
     {
         _context.Update(user);
         await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task<IReadOnlyCollection<User>> GetSubscribesByTelegramUserId(long telegramUserId,
+        CancellationToken ct)
+    {
+        return await _context
+            .Users
+            .Where(x => x.TelegramUserId == telegramUserId)
+            .Include(x => x.SubscribeToUsers)
+            .ToArrayAsync(ct);
     }
 
     public async Task<IReadOnlyCollection<User>> FindUsersByUsername(string loginSubstring, CancellationToken ct)

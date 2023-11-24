@@ -12,6 +12,7 @@ public static class CallbackQueries
     public const string RegisterPhone = "registerPhone";
     public const string AddDesire = "addDesire";
     public const string ShowMyDesires = "showMyDesires";
+    public const string ShowMySubscribes = "showMySubscribes";
 
     public static string ShowDesireDetails(WishItem wishItem) => $"{Prefixes.ShowDesireDetailsPrefix}{Separator}{wishItem.Id}";
 
