@@ -21,11 +21,14 @@ public static class CallbackQueries
 
     public static string SubscribeToUser(User user) => $"{Prefixes.SubscribeToUserPrefix}{Separator}{user.Id}";
 
+    public static string RemoveWishItem(WishItem wishItem) => $"{Prefixes.RemoveWishItemPrefix}{Separator}{wishItem.Id}";
+
     public static class Prefixes
     {
         public const string ShowDesireDetailsPrefix = "showDesireDetails";
         public const string ShowUserContextMenuPrefix = "showUserContextMenu";
         public const string ShowUserDesiresPrefix = "showUserDesires";
         public const string SubscribeToUserPrefix = "subscribeToUser";
+        public const string RemoveWishItemPrefix = "removeWishItem";
     }
 }

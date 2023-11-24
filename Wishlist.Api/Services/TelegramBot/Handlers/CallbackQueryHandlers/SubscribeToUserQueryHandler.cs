@@ -28,7 +28,7 @@ public class SubscribeToUserQueryHandler : ITelegramCallbackQueryHandler
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
         var chatId = callbackQuery.Message!.Chat.Id;
-        var userId = callbackQuery.GetUserIdFromCallbackData();
+        var userId = callbackQuery.GetIdFromCallbackData();
         var initiatorTelegramUserId = callbackQuery.GetCallbackInitiatorTelegramUserId();
 
         var initiatorUser = await _context.Users

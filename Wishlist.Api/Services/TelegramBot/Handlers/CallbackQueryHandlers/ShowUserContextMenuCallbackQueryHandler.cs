@@ -26,7 +26,7 @@ public class ShowUserContextMenuCallbackQueryHandler : ITelegramCallbackQueryHan
     
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
-        var userId = callbackQuery.GetUserIdFromCallbackData();
+        var userId = callbackQuery.GetIdFromCallbackData();
 
         var user = await _context.Users.SingleAsync(x => x.Id == userId, ct);
 

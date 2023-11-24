@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 using Wishlist.Api.Services.TelegramBot.StageKeeper;
 using Wishlist.DAL;
@@ -34,10 +35,17 @@ public class ShowDesireDetailsCallbackQueryHandler : ITelegramCallbackQueryHandl
         await _telegramBotClient.SendTextMessageAsync(
             callbackQuery.Message!.Chat.Id,
             CreateDetailsString(wishItem),
+            replyMarkup: CreateReplyMarkup(wishItem),
             cancellationToken: ct);
     }
 
     public Stage StageAfterHandling => Stage.Default;
 
     private static string CreateDetailsString(WishItem wishItem) => wishItem.ToString();
+
+    private static IReplyMarkup CreateReplyMarkup(WishItem wishItem)
+    {
+        return new InlineKeyboardMarkup(
+            InlineKeyboardButton.WithCallbackData("Удалить", CallbackQueries.RemoveWishItem(wishItem)));
+    }
 }

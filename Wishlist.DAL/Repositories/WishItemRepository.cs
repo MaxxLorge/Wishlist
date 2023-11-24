@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 using Wishlist.DAL.Entities;
 
 namespace Wishlist.DAL.Repositories;
@@ -5,6 +7,7 @@ namespace Wishlist.DAL.Repositories;
 public interface IWishItemRepository
 {
     Task<WishItem> Add(WishItem wishItem, CancellationToken ct);
+    Task DeleteById(int wishItemId, CancellationToken ct);
 }
 
 public class WishItemRepository : IWishItemRepository
@@ -21,5 +24,21 @@ public class WishItemRepository : IWishItemRepository
         _context.Add(wishItem);
         await _context.SaveChangesAsync(ct);
         return wishItem;
+    }
+
+    public async Task DeleteById(int wishItemId, CancellationToken ct)
+    {
+        var wishItem = await _context
+            .WishItems
+            .SingleOrDefaultAsync(x => x.Id == wishItemId, ct);
+        
+        //TODO: обработать null
+        if(wishItem is null)
+            return;
+
+        _context.WishItems
+            .Remove(wishItem);
+        await _context
+            .SaveChangesAsync(ct);
     }
 }

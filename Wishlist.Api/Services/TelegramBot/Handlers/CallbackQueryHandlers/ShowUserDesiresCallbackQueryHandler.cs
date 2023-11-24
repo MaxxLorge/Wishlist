@@ -27,7 +27,7 @@ public class ShowUserDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
     
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
-        var userId = callbackQuery.GetUserIdFromCallbackData();
+        var userId = callbackQuery.GetIdFromCallbackData();
 
         var user = await _context
             .Users

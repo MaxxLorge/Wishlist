@@ -4,7 +4,7 @@ namespace Wishlist.Api.Services.TelegramBot.Extensions;
 
 public static class CallbackDataExtensions
 {
-    public static int GetUserIdFromCallbackData(this CallbackQuery callbackQuery)
+    public static int GetIdFromCallbackData(this CallbackQuery callbackQuery)
     {
         if (callbackQuery.Data == null)
             throw new InvalidOperationException(
