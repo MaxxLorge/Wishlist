@@ -20,7 +20,6 @@ public class MenuItem
         {
             new MenuItem("Поделиться своим номером", CallbackQueries.RegisterPhone),
             new MenuItem("Найти друга", CallbackQueries.FindFriend),
-            new MenuItem("Мои подписки", CallbackQueries.ShowMySubscribes),
             new MenuItem("Добавить желание", CallbackQueries.AddDesire),
             new MenuItem("Показать мой список желаний", CallbackQueries.ShowMyDesires),
         };
