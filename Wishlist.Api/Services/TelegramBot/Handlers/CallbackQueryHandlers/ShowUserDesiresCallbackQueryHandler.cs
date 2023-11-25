@@ -47,7 +47,11 @@ public class ShowUserDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
 
     private IReplyMarkup CreateReplyMarkup(ICollection<WishItem> wishItems) =>
         new InlineKeyboardMarkup(
-            wishItems.Select(x => new[]
+            wishItems
+                .OrderByDescending(x => x.DesirabilityDegree)
+                .ThenBy(x => x.Cost)
+                .ThenByDescending(x => x.Id)
+                .Select(x => new[]
             {
                 InlineKeyboardButton.WithCallbackData(
                     $"{x.Name}\nСтоимость: {x.Cost}\nСтепень желанности: {(int)x.DesirabilityDegree}",
