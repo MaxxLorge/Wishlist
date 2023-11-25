@@ -42,7 +42,7 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasIndex("SubscribeToId");
 
-                    b.ToTable("Subscribes");
+                    b.ToTable("Subscribes", (string)null);
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.User", b =>
@@ -71,7 +71,7 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.WishItem", b =>
@@ -107,7 +107,7 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WishItems");
+                    b.ToTable("WishItems", (string)null);
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.Subscribe", b =>

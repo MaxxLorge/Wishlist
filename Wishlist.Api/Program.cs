@@ -1,23 +1,19 @@
-using System.Net;
-
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-
-using Wishlist.Api.Services;
-using Wishlist.Api.Settings;
-using Wishlist.DAL;
 
 using Telegram.Bot;
 
 using Wishlist.Api;
+using Wishlist.Api.Services;
+using Wishlist.Api.Settings;
+using Wishlist.DAL;
 
 var builder = WebApplication
     .CreateBuilder(args);
 
 builder.Host.UseLightInject(sr => sr.RegisterFrom<CompositionRoot>());
 
-builder.Configuration.AddJsonFile("secret.json");
+builder.Configuration.AddJsonFile("secret.json", true);
 builder.Configuration.AddEnvironmentVariables();
 
 var botConfigurationSection = builder.Configuration.GetSection(BotConfiguration.ConfigurationName);
