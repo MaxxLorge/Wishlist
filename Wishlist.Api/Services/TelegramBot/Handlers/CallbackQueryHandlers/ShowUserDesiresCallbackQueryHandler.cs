@@ -50,7 +50,7 @@ public class ShowUserDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
             wishItems.Select(x => new[]
             {
                 InlineKeyboardButton.WithCallbackData(
-                    $"{x.Name}\nСтоимость: {x.Cost}\nСтепень желанности: {x.DesirabilityDegree}",
+                    $"{x.Name}\nСтоимость: {x.Cost}\nСтепень желанности: {(int)x.DesirabilityDegree}",
                     CallbackQueries.ShowDesireDetails(x))
             }));
 }
