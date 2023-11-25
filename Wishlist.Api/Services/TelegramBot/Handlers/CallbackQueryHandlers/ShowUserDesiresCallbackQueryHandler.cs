@@ -37,7 +37,7 @@ public class ShowUserDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
 
         await _telegramBotClient.SendTextMessageAsync(
             callbackQuery.Message!.Chat.Id,
-            wishItems.Count > 0 ? "Список желаний" : "Список пуст",
+            wishItems.Count > 0 ? "Список желаний:" : "Список пуст",
             replyMarkup: wishItems.Count > 0 ? CreateReplyMarkup(wishItems) : null,
             cancellationToken: ct);
 
@@ -49,6 +49,8 @@ public class ShowUserDesiresCallbackQueryHandler : ITelegramCallbackQueryHandler
         new InlineKeyboardMarkup(
             wishItems.Select(x => new[]
             {
-                InlineKeyboardButton.WithCallbackData(x.Name, CallbackQueries.ShowDesireDetails(x)),
+                InlineKeyboardButton.WithCallbackData(
+                    $"{x.Name}\nСтоимость: {x.Cost}\nСтепень желанности: {x.DesirabilityDegree}",
+                    CallbackQueries.ShowDesireDetails(x))
             }));
 }
