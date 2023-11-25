@@ -62,7 +62,7 @@ public class AddDesireMessageHandler : ITelegramMessageHandler
 
         var user = await _wishlistDbContext
             .Users
-            .Include(x => x.Subscribers)
+            .Include(x => x.SubscribeFrom)
             .SingleAsync(x => x.TelegramUserId == message.From!.Id, ct);
         user.WishItems.Add(wishItem);
 
@@ -83,7 +83,7 @@ public class AddDesireMessageHandler : ITelegramMessageHandler
 
     private async Task NotifySubscribers(User currentUser, WishItem wishItem)
     {
-        var subscribers = currentUser.Subscribers;
+        var subscribers = currentUser.SubscribeFrom;
         foreach (var subscriber in subscribers)
         {
             await _telegramBotClient.SendTextMessageAsync(

@@ -32,10 +32,10 @@ public class SubscribeToUserQueryHandler : ITelegramCallbackQueryHandler
         var initiatorTelegramUserId = callbackQuery.GetCallbackInitiatorTelegramUserId();
 
         var initiatorUser = await _context.Users
-            .Include(x => x.SubscribeToUsers)
+            .Include(x => x.SubscribeTo)
             .SingleAsync(x => x.TelegramUserId == initiatorTelegramUserId, ct);
 
-        if (initiatorUser.SubscribeToUsers.Any(x => x.Id == userId))
+        if (initiatorUser.SubscribeTo.Any(x => x.Id == userId))
         {
             await _telegramBotClient.SendTextMessageAsync(
                 chatId,

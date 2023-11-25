@@ -24,9 +24,9 @@ public class User
 
     public ICollection<WishItem> WishItems { get; set; } = new List<WishItem>();
 
-    public ICollection<User> SubscribeToUsers { get; set; } = new List<User>();
-    
-    public ICollection<User> Subscribers { get; set; } = new List<User>();
+    public ICollection<User> SubscribeTo { get; set; } = new List<User>();
+
+    public ICollection<User> SubscribeFrom { get; set; } = new List<User>();
 
     public override string ToString() => this.DisplaySeparatedByNewLines();
 }

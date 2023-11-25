@@ -56,7 +56,7 @@ public class UserRepository : IUserRepository
         return await _context
             .Users
             .Where(x => x.TelegramUserId == telegramUserId)
-            .Include(x => x.SubscribeToUsers)
+            .SelectMany(x => x.SubscribeTo)
             .ToArrayAsync(ct);
     }
 

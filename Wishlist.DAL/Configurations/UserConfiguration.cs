@@ -16,8 +16,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasMany(x => x.Subscribers)
-            .WithMany(x => x.SubscribeToUsers)
+            .HasMany(x => x.SubscribeFrom)
+            .WithMany(x => x.SubscribeTo)
             .UsingEntity<Subscribe>(
                 l => l.HasOne<User>().WithMany().HasForeignKey(x => x.SubscribeToId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(x => x.SubscribeFromId));
