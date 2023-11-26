@@ -22,6 +22,8 @@ public class User
     [Display(Name = "Номер телефона")]
     public string? Phone { get; set; }
 
+    public Role Role { get; set; } = null!;
+
     public ICollection<WishItem> WishItems { get; set; } = new List<WishItem>();
 
     public ICollection<User> SubscribeTo { get; set; } = new List<User>();

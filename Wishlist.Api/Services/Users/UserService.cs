@@ -42,7 +42,8 @@ public class UserService : IUserService
             Username = username,
             Name = firstName,
             TelegramUserId = telegramUserId,
-            TelegramChatId = chatId
+            TelegramChatId = chatId,
+            Role = new Role(RoleType.User)
         };
 
         await _userRepository

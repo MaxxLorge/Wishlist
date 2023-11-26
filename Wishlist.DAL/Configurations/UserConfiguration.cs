@@ -21,5 +21,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .UsingEntity<Subscribe>(
                 l => l.HasOne<User>().WithMany().HasForeignKey(x => x.SubscribeToId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(x => x.SubscribeFromId));
+
+        builder
+            .HasOne(x => x.Role)
+            .WithOne(x => x.User)
+            .HasForeignKey<Role>(x => x.UserId);
     }
 }
