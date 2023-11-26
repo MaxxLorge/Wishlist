@@ -12,11 +12,13 @@ public class WishlistDbContext : DbContext
         
     }
 
-    public DbSet<User> Users { get; set; }
+    public required DbSet<User> Users { get; set; }
 
-    public DbSet<WishItem> WishItems { get; set; }
+    public required DbSet<WishItem> WishItems { get; set; }
 
-    public DbSet<Subscribe> Subscribes { get; set; }
+    public required DbSet<Subscribe> Subscribes { get; set; }
+
+    public required DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

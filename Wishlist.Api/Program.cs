@@ -46,6 +46,8 @@ RegisterDatabase();
 
 var app = builder.Build();
 
+await ApplyMigrations();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -61,15 +63,32 @@ return;
 
 void RegisterDatabase()
 {
-    var useInMemoryDb = builder!.Configuration.GetValue<bool>("UseInMemoryDatabase");
+    var useInMemoryDb = builder.Configuration.GetValue<bool>("UseInMemoryDatabase");
     if (useInMemoryDb)
         builder
             .Services
             .AddDbContextPool<WishlistDbContext>(optionsBuilder =>
                 optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString()));
     else
-        builder!
+        builder
             .Services
             .AddDbContextPool<WishlistDbContext>(optionsBuilder =>
                 optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
+}
+
+async Task ApplyMigrations()
+{
+    if (app == null)
+        throw new InvalidOperationException($"Не удалось создать {nameof(WebApplication)}");
+
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<WishlistDbContext>();
+    var pendingMigrations = (await context.Database.GetPendingMigrationsAsync()).ToArray();
+
+    if (pendingMigrations.Any())
+    {
+        await context.Database.MigrateAsync();
+        app.Logger.LogInformation("Были применены миграции:{NewLine}{Migrations}",
+            Environment.NewLine, string.Join(Environment.NewLine, pendingMigrations));
+    }
 }

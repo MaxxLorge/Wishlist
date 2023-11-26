@@ -22,6 +22,27 @@ namespace Wishlist.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Wishlist.DAL.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<byte>("RoleType")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Wishlist.DAL.Entities.Subscribe", b =>
                 {
                     b.Property<int>("Id")
@@ -42,7 +63,7 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasIndex("SubscribeToId");
 
-                    b.ToTable("Subscribes", (string)null);
+                    b.ToTable("Subscribes");
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.User", b =>
@@ -71,7 +92,7 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.WishItem", b =>
@@ -107,7 +128,18 @@ namespace Wishlist.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WishItems", (string)null);
+                    b.ToTable("WishItems");
+                });
+
+            modelBuilder.Entity("Wishlist.DAL.Entities.Role", b =>
+                {
+                    b.HasOne("Wishlist.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Wishlist.DAL.Entities.Subscribe", b =>
