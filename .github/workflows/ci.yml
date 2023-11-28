@@ -42,3 +42,4 @@ jobs:
           command: |
             docker image pull maxxlorge/wishlist:latest
             docker compose up -d --remove-orphans
+            docker image prune -f
