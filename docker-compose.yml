@@ -1,6 +1,5 @@
 volumes:
   psql:
-  pgadmin:
 
 secrets:
   wishlist_app_secrets:
