@@ -5,9 +5,12 @@ volumes:
 secrets:
   wishlist_app_secrets:
     file: secret.json
+  psql_root_password:
+    file: psql_root_password
 
 services:
   psql:
+    container_name: psql
     image: postgres
     restart: always
     volumes:
@@ -16,9 +19,14 @@ services:
       - 5432:5432
     environment:
       TZ: Asia/Yekaterinburg
-      POSTGRES_PASSWORD: m35pn92x
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-passwd
+    secrets:
+      - source: psql_root_password
+        target: /run/secrets/postgres-passwd
+
 
   wishlist_app:
+    container_name: wishlist_app
     image: maxxlorge/wishlist:latest
     restart: always
     ports:

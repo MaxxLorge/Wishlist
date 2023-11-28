@@ -6,3 +6,4 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 secret.json
+psql_root_password
