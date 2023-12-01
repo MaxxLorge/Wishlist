@@ -4,13 +4,23 @@ using Wishlist.DAL.Entities;
 
 namespace Wishlist.DAL.Repositories;
 
+[Flags]
+public enum UserIncludeOptions
+{
+    None = 0,
+    Role = 1
+}
+
 public interface IUserRepository
 {
+    Task<IReadOnlyCollection<User>> GetAllUsers(CancellationToken ct);
+    
     Task<User?> FindById(int id, CancellationToken ct);
 
     Task<User?> AddUser(User user, CancellationToken ct);
 
-    Task<User?> FindByTelegramUserId(long telegramUserId, CancellationToken ct);
+    Task<User?> FindByTelegramUserId(long telegramUserId, CancellationToken ct,
+        UserIncludeOptions includeOptions = UserIncludeOptions.None);
 
     Task Update(User user, CancellationToken ct);
 
@@ -28,6 +38,11 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
+    public async Task<IReadOnlyCollection<User>> GetAllUsers(CancellationToken ct)
+    {
+        return await _context.Users.ToArrayAsync(ct);
+    }
+
     public async Task<User?> FindById(int id, CancellationToken ct) =>
         await _context
             .Users
@@ -41,8 +56,16 @@ public class UserRepository : IUserRepository
         return savedCount > 1 ? user : null;
     }
 
-    public Task<User?> FindByTelegramUserId(long telegramUserId, CancellationToken ct) => 
-        _context.Users.SingleOrDefaultAsync(x => x.TelegramUserId == telegramUserId, ct);
+    public Task<User?> FindByTelegramUserId(long telegramUserId, CancellationToken ct,
+        UserIncludeOptions userIncludeOptions = UserIncludeOptions.None)
+    {
+        var query = _context.Users.AsQueryable();
+
+        if (userIncludeOptions.HasFlag(UserIncludeOptions.Role))
+            query = query.Include(x => x.Role);
+
+        return query.SingleOrDefaultAsync(x => x.TelegramUserId == telegramUserId, ct);
+    }
 
     public async Task Update(User user, CancellationToken ct)
     {
