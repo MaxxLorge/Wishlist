@@ -18,7 +18,8 @@ public class ChangeWishItemPriorityCallbackQueryHandler : ITelegramCallbackQuery
         _stageKeeper = stageKeeper;
     }
 
-    public Func<string, bool> CallbackDataPredicate => _ => true;
+    public Func<string, bool> CallbackDataPredicate =>
+        s => s.StartsWith(CallbackQueries.Prefixes.ChangeWishItemPriority);
 
     public async Task Handle(CallbackQuery callbackQuery, CancellationToken ct)
     {
