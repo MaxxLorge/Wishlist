@@ -6,5 +6,6 @@ public enum Stage
     Default = 0,
     FindingFriend = 1,
     ShareContact = 2,
-    AddDesire = 4
+    AddDesire = 4,
+    ChangingWishItemPriority = 8
 }

@@ -8,6 +8,8 @@ public class InMemoryStageKeeper : IStageKeeper
     
     public Stage Stage { get; private set; } = Stage.Default;
 
+    public object? AdditionalData { get; set; }
+
     public void SetStage(long telegramUserId, Stage stage) =>
         Stages
             .AddOrUpdate(telegramUserId, id => stage, (_, _) => stage);

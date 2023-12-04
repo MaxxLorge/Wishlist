@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 using Wishlist.Api.Services.TelegramBot.Extensions;
 using Wishlist.Api.Services.TelegramBot.StageKeeper;
-using Wishlist.DAL;
 using Wishlist.DAL.Entities;
 using Wishlist.DAL.Repositories;
 
@@ -56,8 +53,12 @@ public class ShowWishItemDetailsCallbackQueryHandler : ITelegramCallbackQueryHan
     {
         if (user.Id != wishItem.UserId)
             return null;
-        
-        return new InlineKeyboardMarkup(
-            InlineKeyboardButton.WithCallbackData("Удалить", CallbackQueries.RemoveWishItem(wishItem)));
+
+        return new InlineKeyboardMarkup(new[]
+        {
+            InlineKeyboardButton.WithCallbackData("Изменить приоритет",
+                CallbackQueries.ChangeWishItemPriority(wishItem)),
+            InlineKeyboardButton.WithCallbackData("Удалить", CallbackQueries.RemoveWishItem(wishItem))
+        });
     }
 }

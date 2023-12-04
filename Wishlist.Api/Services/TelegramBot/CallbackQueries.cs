@@ -24,6 +24,11 @@ public static class CallbackQueries
 
     public static string RemoveWishItem(WishItem wishItem) => $"{Prefixes.RemoveWishItemPrefix}{Separator}{wishItem.Id}";
 
+    public static string ChangeWishItemPriority(WishItem wishItem)
+    {
+        return $"{Prefixes.ChangeWishItemPriority}{Separator}{wishItem.Id}";
+    }
+
     public static class Prefixes
     {
         public const string ShowDesireDetailsPrefix = "showDesireDetails";
@@ -31,5 +36,6 @@ public static class CallbackQueries
         public const string ShowUserDesiresPrefix = "showUserDesires";
         public const string SubscribeToUserPrefix = "subscribeToUser";
         public const string RemoveWishItemPrefix = "removeWishItem";
+        public const string ChangeWishItemPriority = "changePriority";
     }
 }
